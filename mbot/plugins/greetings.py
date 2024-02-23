@@ -32,16 +32,9 @@ from os import execvp,sys
 async def start(client,message):
     reply_markup = [[
         InlineKeyboardButton(
-            text="Bot Channel", url="https://t.me/Spotify_downloa"),
-        InlineKeyboardButton(
-            text="Repo",
-            url="https://github.com/Masterolic/Spotify-Downloader/"),
+            text="Bot Channel", url="https://t.me/Rapid_Bots"),
         InlineKeyboardButton(text="Help",callback_data="helphome")
-        ],
-        [
-            InlineKeyboardButton(text="Donate",
-            url="https://www.buymeacoffee.com/Masterolic"),
-        ]]
+    ]]
     if LOG_GROUP:
 
         invite_link = await client.create_chat_invite_link(chat_id=(int(LOG_GROUP) if str(LOG_GROUP).startswith("-100") else LOG_GROUP))
@@ -49,7 +42,7 @@ async def start(client,message):
     if message.chat.type != "private" and message.chat.id not in AUTH_CHATS and message.from_user.id not in SUDO_USERS:
         return await message.reply_text("This Bot Will Not Work In Groups Unless It's Authorized.",
                     reply_markup=InlineKeyboardMarkup(reply_markup))
-    return await message.reply_text(f"Hello {message.from_user.first_name}, I'm a Simple Music Downloader Bot. I Currently Support Download from Youtube.",
+    return await message.reply_text(f"Hello {message.from_user.first_name}, I'm a Simple Music Downloader Bot. I Currently Support Download from Spotify & Youtube.",
                     reply_markup=InlineKeyboardMarkup(reply_markup))
 
 @Mbot.on_message(filters.command("restart") & filters.chat(OWNER_ID) & filters.private)
@@ -72,9 +65,7 @@ HELP = {
     "Youtube": "Send **Youtube** Link in Chat to Download Song.",
     "Spotify": "Send **Spotify** Track/Playlist/Album/Show/Episode's Link. I'll Download It For You.",
     "Deezer": "Send Deezer Playlist/Album/Track Link. I'll Download It For You.",
-    "Jiosaavn": "Not Implemented yet",
-    "SoundCloud": "Not Implemented yet",
-    "Group": "Will add later."
+    "Group": "@Spotify_Downloader_Group"
 }
 
 
@@ -84,7 +75,7 @@ async def help(_,message):
         [InlineKeyboardButton(text=i, callback_data=f"help_{i}")] for i in HELP
     ]
     button.append([InlineKeyboardButton(text="back", callback_data=f"backdome")])
-    await message.reply_text(f"Hello **{message.from_user.first_name}**, I'm **@spotify_downloa_bot**.\nI'm Here to download your music.",
+    await message.reply_text(f"Hello **{message.from_user.first_name}**, I'm **@Rapid_Spotify_Bot**.\nI'm Here to download your music.",
                         reply_markup=InlineKeyboardMarkup(button))
 
 @Mbot.on_callback_query(filters.regex(r"backdome"))
@@ -93,7 +84,7 @@ async def backdo(_,query):
         [InlineKeyboardButton(text=i, callback_data=f"help_{i}")] for i in HELP
     ]
     button.append([InlineKeyboardButton(text="back", callback_data=f"backdome")])
-    await query.message.edit(f"Hello **{query.message.from_user.first_name}**, I'm **@spotify_downloa_bot**.\nI'm Here to download your music.",
+    await query.message.edit(f"Hello **{query.message.from_user.first_name}**, I'm **@Rapid_Spotify_Bot**.\nI'm Here to download your music.",
                         reply_markup=InlineKeyboardMarkup(button))     
     
 @Mbot.on_callback_query(filters.regex(r"help_(.*?)"))
@@ -108,5 +99,5 @@ async def help_home(_,query):
     button = [
         [InlineKeyboardButton(text=i, callback_data=f"help_{i}")] for i in HELP
     ]
-    await query.message.edit(f"Hello **{query.from_user.first_name}**, I'm **@spotify_downloa_bot**.\nI'm Here to download your music.",
+    await query.message.edit(f"Hello **{query.from_user.first_name}**, I'm **@Rapid_Spotify_Bot**.\nI'm Here to download your music.",
                         reply_markup=InlineKeyboardMarkup(button))
